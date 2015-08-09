@@ -1,15 +1,18 @@
 #ifndef _VECTOR_H_
     #define _VECTOR_H_
 
-struct Vector2 {
-    double x;
-    double y;
-};
+template<typename T>
+    struct Vector2 {
+        T x;
+        T y;
+    };
 
-struct Vector3 {
-    double pitch;
-    double roll;
-    double yaw;
-};
+
+template<typename T>
+    struct Vector3 {
+        T pitch;
+        T roll;
+        T yaw;
+    };
 
 #endif

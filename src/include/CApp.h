@@ -50,8 +50,8 @@ class CApp {
         int FindDistance(
             int view_x, 
             double angle_increment,
-            Vector2* pos, 
-            Vector3* rot, 
+            Vector2<double>* pos, 
+            Vector3<double>* rot, 
             short grid_size
             );
 
@@ -59,7 +59,13 @@ class CApp {
         void DrawLine(
             Uint16 x, 
             Uint16 y_min, 
-            Uint16 y_max
+            Uint16 y_max,
+            Uint32 pixel_color
             );
+
+        // math
+        // TODO: move elsewhere
+        double RadToDeg(double degrees);
+        double DegToRad(double degrees);
 };
 #endif

@@ -1,9 +1,12 @@
 #include "include/Player.h"
 
 Player::Player() {
-    pos_vector.x = 5.5;
-    pos_vector.y = 5.5;
 
+    // store pos in world coords, not grid coords
+    pos_vector.x = 500;
+    pos_vector.y = 500;
+
+    // in degrees
     rot_vector.pitch = 0;
     rot_vector.roll = 0;
     // TODO FORDEV: player starts facing north
@@ -12,11 +15,11 @@ Player::Player() {
     player_height = 64;
 }
 
-Vector2* Player::GetPosition() {
+Vector2<double>* Player::GetPosition() {
     return &pos_vector;
 }
 
-Vector3* Player::GetRotation() {
+Vector3<double>* Player::GetRotation() {
     return &rot_vector;
 }
 
