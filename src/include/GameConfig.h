@@ -6,7 +6,7 @@
 
 class GameConfig {
     public: 
-        Uint16 wall_height;
+        Uint8 grid_size;
         
         Uint8 fov;
 

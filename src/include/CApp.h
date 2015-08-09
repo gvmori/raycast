@@ -2,9 +2,14 @@
     #define _CAPP_H_
 
 #include <SDL.h>
-#include <stdint.h>
+#include <cstdint>
 #include <vector>
+#include <cmath>
+#include <algorithm>
+
 #include "GameConfig.h"
+#include "Player.h"
+#include "Vector.h"
 
 // TODO: remove
 #include <iostream>
@@ -14,21 +19,20 @@ class CApp {
         bool running;
         SDL_Window* screen;
         SDL_Renderer* renderer;
+        SDL_Surface* screen_buffer_surf;
         SDL_Texture* screen_buffer_tex;
+        SDL_PixelFormat* screen_format;
+        int screen_pitch_mod;
 
         std::vector<SDL_Texture*> textures;
 
         std::vector< std::vector<int> > level_array;
 
-        int screen_pitch_mod;
-        SDL_PixelFormat* screen_format;
-        SDL_Surface* screen_buffer_surf;
-
         Uint32 start_time;
         Uint32 last_time;
-        Uint32 last_color;
 
         GameConfig config;
+        Player player;
 
     public:
         CApp();
@@ -39,6 +43,17 @@ class CApp {
         void MainLoop();
         void Render();
         void Cleanup();
+
+        // raycast functions
+        // TODO: move to own class?
+        void Raycast();
+        int FindDistance(
+            int view_x, 
+            double angle_increment,
+            Vector2* pos, 
+            Vector3* rot, 
+            short grid_size
+            );
 
         // drawing funtions
         void DrawLine(

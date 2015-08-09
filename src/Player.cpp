@@ -1,31 +1,33 @@
 #include "include/Player.h"
 
 Player::Player() {
-    pos_vector[0] = 5.5;
-    pos_vector[1] = 5.5;
+    pos_vector.x = 5.5;
+    pos_vector.y = 5.5;
 
-    rot_vector[0] = 0;
-    rot_vector[1] = 0;
-    rot_vector[2] = 0;
+    rot_vector.pitch = 0;
+    rot_vector.roll = 0;
+    // TODO FORDEV: player starts facing north
+    rot_vector.yaw = 90;
 
     player_height = 64;
 }
 
-float* Player::GetPosition() {
-    return pos_vector;
+Vector2* Player::GetPosition() {
+    return &pos_vector;
 }
 
-float* Player::GetRotation() {
-    return rot_vector;
+Vector3* Player::GetRotation() {
+    return &rot_vector;
 }
 
-void Player::SetPosition(float x, float y) {
-    pos_vector[0] = x;
-    pos_vector[1] = y;
+void Player::SetPosition(double x, double y) {
+    pos_vector.x = x;
+    pos_vector.y = y;
 }
 
-void Player::SetRotation(float x, float y, float z) {
-    rot_vector[0] = x;
-    rot_vector[1] = y;
-    rot_vector[2] = z;
+// TODO: likely will only have 2d (up/down left/right) rotation, use vec2?
+void Player::SetRotation(double pitch, double roll, double yaw) {
+    rot_vector.pitch = pitch;
+    rot_vector.roll = roll;
+    rot_vector.yaw = yaw;
 }

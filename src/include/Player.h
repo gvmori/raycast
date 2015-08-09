@@ -1,19 +1,21 @@
 #ifndef _PLAYER_H_
     #define _PLAYER_H_
-
-#include "CApp.h"
+ 
+#include <SDL.h>
+#include <cstdint>
+#include "Vector.h"
 
 class Player {
     private:
-        float pos_vector[2];
-        float rot_vector[3];
+        Vector2 pos_vector;
+        Vector3 rot_vector;
 
     public:
         Uint16 player_height;
-        float* GetPosition();
-        float* GetRotation();
-        void SetPosition(float x, float y);
-        void SetRotation(float x, float y, float z);
+        Vector2* GetPosition();
+        Vector3* GetRotation();
+        void SetPosition(double x, double y);
+        void SetRotation(double pitch, double roll, double yaw);
         Player();
 };
 

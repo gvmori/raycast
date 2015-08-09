@@ -20,7 +20,6 @@ int CApp::Execute() {
         return -1;
     }
 
-
     start_time = SDL_GetTicks();
     SDL_Event event;
 

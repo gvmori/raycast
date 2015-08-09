@@ -7,6 +7,6 @@ GameConfig::GameConfig() {
     
     fov = 90;
 
-    // player settings
-    wall_height = 128;
+    // world settings
+    grid_size = 128;
 }

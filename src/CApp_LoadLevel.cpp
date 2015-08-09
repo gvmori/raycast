@@ -27,5 +27,7 @@ bool CApp::LoadLevel() {
         }
     }
 
+    player = Player();
+
     return true;
 }

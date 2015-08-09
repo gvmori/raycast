@@ -1,7 +1,7 @@
 #include "include/CApp.h"
 
 void CApp::Cleanup() {
-    for (int i=0; i < textures.size(); i++){
+    for (Uint8 i=0; i < textures.size(); i++){
         if (textures.at(i)) {
             SDL_DestroyTexture(textures[i]);
         }
@@ -20,4 +20,3 @@ void CApp::Cleanup() {
 
     SDL_Quit();
 }
-
