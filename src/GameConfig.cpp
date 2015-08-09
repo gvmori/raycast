@@ -8,9 +8,5 @@ GameConfig::GameConfig() {
     fov = 90;
 
     // player settings
-    player_height = 64;
     wall_height = 128;
-    
-    // render settings
-    // pixel_format = SDL_PIXELFORMAT_RGB888;
 }

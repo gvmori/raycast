@@ -11,10 +11,8 @@ CApp::CApp() {
 
     config = GameConfig();
 
-    // pixel_buffer = new Uint32*[config.view_height];
-    // for (int i = 0; i < config.view_height; i++){
-    //     pixel_buffer[i] = new Uint32[config.view_width];
-    // }
+    start_time = 0;
+    last_time = 0;
 }
 
 int CApp::Execute() {
@@ -22,6 +20,8 @@ int CApp::Execute() {
         return -1;
     }
 
+
+    start_time = SDL_GetTicks();
     SDL_Event event;
 
     while (running) {

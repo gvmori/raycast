@@ -56,8 +56,10 @@ bool CApp::Init() {
         amask = 0xff000000;
     #endif
 
-    screen_buffer_surf = SDL_CreateRGBSurface(0, width, height, 32, 
-                                               rmask, gmask, bmask, amask);
+    screen_buffer_surf = SDL_CreateRGBSurface(
+        0, width, height, 32, 
+        rmask, gmask, bmask, amask
+        );
 
     screen_buffer_tex = SDL_CreateTexture(
         renderer, 

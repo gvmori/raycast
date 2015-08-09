@@ -1,5 +1,7 @@
 #include "include/CApp.h"
 
+#include <cstdlib>
+
 void CApp::MainLoop() {
     // TODO
     // raycast+render view to pixel_buffer

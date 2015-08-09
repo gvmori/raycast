@@ -15,7 +15,6 @@ class CApp {
         SDL_Window* screen;
         SDL_Renderer* renderer;
         SDL_Texture* screen_buffer_tex;
-        // Uint32** pixel_buffer;
 
         std::vector<SDL_Texture*> textures;
 
@@ -24,6 +23,10 @@ class CApp {
         int screen_pitch_mod;
         SDL_PixelFormat* screen_format;
         SDL_Surface* screen_buffer_surf;
+
+        Uint32 start_time;
+        Uint32 last_time;
+        Uint32 last_color;
 
         GameConfig config;
 
@@ -41,8 +44,7 @@ class CApp {
         void DrawLine(
             Uint16 x, 
             Uint16 y_min, 
-            Uint16 y_max//,
-            //SDL_Texture* texture
+            Uint16 y_max
             );
 };
 #endif
