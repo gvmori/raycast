@@ -1,15 +1,20 @@
 #ifndef _GAMECONFIG_H_
     #define _GAMECONFIG_H_
 
+#include <SDL.h>
+#include <stdint.h>
+
 class GameConfig {
     public: 
-        unsigned int player_height;
-        unsigned int wall_height;
+        Uint16 player_height;
+        Uint16 wall_height;
         
-        unsigned int fov;
+        Uint8 fov;
 
-        unsigned int view_height;
-        unsigned int view_width;
+        Uint16 view_height;
+        Uint16 view_width;
+
+        // Uint32 pixel_format;
 
         GameConfig();
 };

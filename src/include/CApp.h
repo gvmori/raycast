@@ -1,22 +1,29 @@
 #ifndef _CAPP_H_
     #define _CAPP_H_
 
-#include <SDL.h> 
+#include <SDL.h>
+#include <stdint.h>
 #include <vector>
 #include "GameConfig.h"
-// #include "ContentManager.h"
+
+// TODO: remove
+#include <iostream>
 
 class CApp {
     private:
         bool running;
         SDL_Window* screen;
         SDL_Renderer* renderer;
-        // ContentManager content_manager;
+        SDL_Texture* screen_buffer_tex;
+        // Uint32** pixel_buffer;
 
-        SDL_Surface* bmp;
         std::vector<SDL_Texture*> textures;
 
         std::vector< std::vector<int> > level_array;
+
+        int screen_pitch_mod;
+        SDL_PixelFormat* screen_format;
+        SDL_Surface* screen_buffer_surf;
 
         GameConfig config;
 
@@ -29,5 +36,13 @@ class CApp {
         void MainLoop();
         void Render();
         void Cleanup();
+
+        // drawing funtions
+        void DrawLine(
+            Uint16 x, 
+            Uint16 y_min, 
+            Uint16 y_max//,
+            //SDL_Texture* texture
+            );
 };
 #endif

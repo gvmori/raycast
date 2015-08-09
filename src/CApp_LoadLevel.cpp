@@ -11,6 +11,7 @@ bool CApp::LoadLevel() {
     // TODO: check for nullptr at end of textures, if loading failed
 
     SDL_FreeSurface(bmp);
+    bmp = nullptr;
 
     // generate test level
     int max_x = 10;

@@ -1,13 +1,15 @@
 #include "include/CApp.h"
 
 void CApp::Render() {
+    SDL_UpdateTexture(
+        screen_buffer_tex, 
+        NULL,  
+        screen_buffer_surf->pixels,
+        screen_pitch_mod);
+
 
     SDL_RenderClear(renderer);
-
-    // won't want to render like this...
-    for (uint i=0; i < textures.size(); i++){
-        SDL_RenderCopy(renderer, textures[i], NULL, NULL);
-    }
+    SDL_RenderCopy(renderer, screen_buffer_tex, NULL, NULL);
 
     SDL_RenderPresent(renderer);
 }

@@ -3,10 +3,18 @@
 CApp::CApp() {
     screen = nullptr;
     renderer = nullptr;
-    // content_manager = ContentManager();
+    screen_buffer_tex = nullptr;
+    screen_buffer_surf = nullptr;
+    screen_format = nullptr;
+
     running = true;
 
     config = GameConfig();
+
+    // pixel_buffer = new Uint32*[config.view_height];
+    // for (int i = 0; i < config.view_height; i++){
+    //     pixel_buffer[i] = new Uint32[config.view_width];
+    // }
 }
 
 int CApp::Execute() {
