@@ -9,6 +9,10 @@ void CApp::MainLoop() {
     // for (int i=0; i < config.view_width; i++){
     //     DrawLine(i, 0, y_max);
     // }
+
+    // TODO: remove fillrect, shouldn't be necessary after floor+ceiling
+    // drawing is in
+    SDL_FillRect(screen_buffer_surf, NULL, 0x000000);
     Raycast();
     
     

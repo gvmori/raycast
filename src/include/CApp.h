@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <limits>
 
 #include "GameConfig.h"
 #include "Player.h"
@@ -47,7 +48,7 @@ class CApp {
         // raycast functions
         // TODO: move to own class?
         void Raycast();
-        int FindDistance(
+        double FindDistance(
             int view_x, 
             double angle_increment,
             Vector2<double>* pos, 

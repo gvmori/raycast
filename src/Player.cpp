@@ -3,7 +3,7 @@
 Player::Player() {
 
     // store pos in world coords, not grid coords
-    pos_vector.x = 500;
+    pos_vector.x = 200;
     pos_vector.y = 500;
 
     // in degrees
