@@ -16,19 +16,19 @@ void CApp::Raycast() {
 
     for (int i=0; i < config.view_width; i++){
         double distance = FindDistance(i, angle_increment, pos, rot, grid_size); 
-        std::cout << "dist: " << distance << std::endl;
+        // std::cout << "dist: " << distance << std::endl;
         int wall_size = (int)ceil(((grid_size / distance) * dist_to_proj_plane));
-        std::cout << "wallsize: " << wall_size << std::endl;
+        // std::cout << "wallsize: " << wall_size << std::endl;
         // TODO: figure out top bound based on current player height instead of view height
         //       calculate first half outside loop
         int top = (config.view_height / 2) - (wall_size / 2);
-        std::cout << "top: " << top << std::endl;
+        // std::cout << "top: " << top << std::endl;
         wall_size = std::min((int)config.view_height, (int)wall_size + top);
         DrawLine(i, top, wall_size, SDL_MapRGB(screen_format, 255, 0, 0));
     }
 
     // TODO: remove this once controls are in
-    player.SetRotation(rot->pitch, rot->roll, rot->yaw + .1);
+    // player.SetRotation(rot->pitch, rot->roll, rot->yaw + .1);
     // player.SetPosition(pos->x - 1, pos->y - 1);
 }
 
@@ -55,18 +55,21 @@ double CApp::FindDistance(
         || (absolute_angle - 270) <= .001
        ) {
         relative_angle += .005;
-        absolute_angle += .005;
+        absolute_angle   += .005;
     }
-    std::cout << "ABS ANGLE: " <<  absolute_angle << std::endl;
-    std::cout << "REL ANGLE: " << relative_angle << std::endl;
+    // std::cout << "ABS ANGLE: " <<  absolute_angle << std::endl;
+    // std::cout << "REL ANGLE: " << relative_angle << std::endl;
+    std::cout << "FACING: " << rot->yaw << std::endl;
+    std::cout << "POS X: " << pos->x << " POS Y: " << pos->y << std::endl;
 
     // TODO: precalculate or cache
-    // double A_tan = tan(DegToRad(absolute_angle));
     double alpha_tan = tan(DegToRad(absolute_angle));
+
+    // std::cout << "TAN: " << alpha_tan << std::endl;
 
     // find nearest horizontal intersection
     Vector2<double> horiz_vertex;
-    if (absolute_angle > 180) {
+    if (absolute_angle < 180) {
         horiz_vertex.y = (int)(pos->y / grid_size) * grid_size - 1;
     }
     else {
@@ -89,28 +92,38 @@ double CApp::FindDistance(
     bool skip_horiz_wall = false;
     bool skip_vert_wall = false;
 
-    // if (vert_vertex.y < 0 || vert_vertex.y > ((10 * grid_size) - pos->y) * grid_size) {
+    // if (vert_vertex.y < 0 || vert_vertex.y > ((10 * grid_size) - pos->y)) {
     //     skip_vert_wall = true;
     // }
-    // if (horiz_vertex.x < 0 || horiz_vertex.x > ((10 * grid_size) - pos->x) * grid_size) {
+    // if (horiz_vertex.x < 0 || horiz_vertex.x > ((10 * grid_size) - pos->x)) {
     //     skip_horiz_wall = true;
     // }
+
+    vert_vertex.y = std::max(0.0, vert_vertex.y);
+    vert_vertex.y = std::min(vert_vertex.y, (double)(grid_size * 10 - 1));
+    vert_vertex.x = std::max(0.0, vert_vertex.x);
+    vert_vertex.x = std::min(vert_vertex.x, (double)(grid_size * 10 - 1));
+
+    horiz_vertex.y = std::max(0.0, horiz_vertex.y);
+    horiz_vertex.y = std::min(horiz_vertex.y, (double)(grid_size * 10 - 1));
+    horiz_vertex.x = std::max(0.0, horiz_vertex.x);
+    horiz_vertex.x = std::min(horiz_vertex.x, (double)(grid_size * 10 - 1));
 
     // check for walls
     // both can be true, will need distance to determine which is closest
 
-    std::cout << "check horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
+    // std::cout << "check horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
     if (!skip_horiz_wall &&
         level_array[(int)(horiz_vertex.x / grid_size)][(int)(horiz_vertex.y / grid_size)]
         ) {
-        std::cout << "found horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
+        // std::cout << "found horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
         found_horiz_wall = true;
     }
-    std::cout << "check vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
+    // std::cout << "check vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
     if (!skip_vert_wall &&
         level_array[(int)(vert_vertex.x / grid_size)][(int)(vert_vertex.y / grid_size)]
         ) {
-        std::cout << "found vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
+        // std::cout << "found vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
         found_vert_wall = true;
     }
 
@@ -124,25 +137,26 @@ double CApp::FindDistance(
 
         // determine interval for next vert
         vert_interval.x = grid_size;
-        vert_interval.y = (grid_size / alpha_tan);
+        vert_interval.y = (grid_size * alpha_tan);
+        // vert_interval.y = sin(DegToRad(absolute_angle) / cos(DegToRad(absolute_angle))) * grid_size;
 
         // move left if ray is facing left
         if (absolute_angle > 90 && absolute_angle < 270) {
-            // horiz_interval.x *= -1;
+            horiz_interval.x *= -1;
             vert_interval.x *= -1;
         }
         // move up if ray is facing up
         if (absolute_angle < 180) {
             horiz_interval.y *= -1;
-            // vert_interval.y *= -1;
+            vert_interval.y *= -1;
         }
 
-        std::cout << "horiz_interval.x: " << horiz_interval.x << " horiz_interval.y: " << horiz_interval.y << std::endl;
-        std::cout << "vert_interval.x: " << vert_interval.x << " vert_interval.y: " << vert_interval.y << std::endl;
+        // std::cout << "horiz_interval.x: " << horiz_interval.x << " horiz_interval.y: " << horiz_interval.y << std::endl;
+        // std::cout << "vert_interval.x: " << vert_interval.x << " vert_interval.y: " << vert_interval.y << std::endl;
         // while !wall
         //     increment horiz, check for wall
         //     increment vert, check for wall
-        std::cout << "enter loop" << std::endl;
+        // std::cout << "enter loop" << std::endl;
         while (!found_horiz_wall && !found_vert_wall
                 && !(skip_vert_wall || skip_horiz_wall)
             ) {
@@ -150,12 +164,16 @@ double CApp::FindDistance(
             if (!skip_horiz_wall) {
                 horiz_vertex.x += horiz_interval.x;
                 horiz_vertex.y += horiz_interval.y;
-                std::cout << "check horiz wall: " << (int)(horiz_vertex.x / grid_size) << ", " << (int)(horiz_vertex.y / grid_size) << std::endl;
-                if (horiz_vertex.x < 0 || horiz_vertex.y < 0) {
-                    skip_horiz_wall = true;
-                }
-                else if (level_array[(int)(horiz_vertex.x / grid_size)][(int)(horiz_vertex.y / grid_size)]) {
-                    std::cout << "found horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
+                horiz_vertex.y = std::max(0.0, horiz_vertex.y);
+                horiz_vertex.y = std::min(horiz_vertex.y, (double)(grid_size * 10 - 1));
+                horiz_vertex.x = std::max(0.0, horiz_vertex.x);
+                horiz_vertex.x = std::min(horiz_vertex.x, (double)(grid_size * 10 - 1));
+                // std::cout << "check horiz wall: " << (int)(horiz_vertex.x / grid_size) << ", " << (int)(horiz_vertex.y / grid_size) << std::endl;
+                // if (horiz_vertex.x < 0 || horiz_vertex.y < 0 || horiz_vertex.y > ((10 * grid_size) - pos->y) || horiz_vertex.x > ((10 * grid_size) - pos->x)) {
+                //     skip_horiz_wall = true;
+                // }
+                if (level_array[(int)(horiz_vertex.x / grid_size)][(int)(horiz_vertex.y / grid_size)]) {
+                    // std::cout << "found horiz wall: " << (int)horiz_vertex.x << ", " << (int)horiz_vertex.y << std::endl;
                     found_horiz_wall = true;
                 }
 
@@ -164,13 +182,16 @@ double CApp::FindDistance(
             if (!skip_vert_wall) {
                 vert_vertex.x += vert_interval.x;
                 vert_vertex.y += vert_interval.y;
-
-                std::cout << "check vert wall: " << (int)(vert_vertex.x / grid_size) << ", " << (int)(vert_vertex.y / grid_size) << std::endl;
-                if (vert_vertex.x < 0 || vert_vertex.y < 0) {
-                    skip_vert_wall = true;
-                }
-                else if (level_array[(int)(vert_vertex.x / grid_size)][(int)(vert_vertex.y / grid_size)]) {
-                std::cout << "found vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
+                vert_vertex.y = std::max(0.0, vert_vertex.y);
+                vert_vertex.y = std::min(vert_vertex.y, (double)(grid_size * 10 - 1));
+                vert_vertex.x = std::max(0.0, vert_vertex.x);
+                vert_vertex.x = std::min(vert_vertex.x, (double)(grid_size * 10 - 1));
+                // std::cout << "check vert wall: " << (int)(vert_vertex.x / grid_size) << ", " << (int)(vert_vertex.y / grid_size) << std::endl;
+                // if (vert_vertex.x < 0 || vert_vertex.y < 0 || vert_vertex.y > ((10 * grid_size) - pos->y) || vert_vertex.x > ((10 * grid_size) - pos->x)) {
+                //     skip_vert_wall = true;
+                // }
+                if (level_array[(int)(vert_vertex.x / grid_size)][(int)(vert_vertex.y / grid_size)]) {
+                // std::cout << "found vert wall: " << (int)vert_vertex.x << ", " << (int)vert_vertex.y << std::endl;
                     found_vert_wall = true;
                 }
             }
@@ -199,7 +220,7 @@ double CApp::FindDistance(
         vert_distance = std::numeric_limits<double>::max();
     }
 
-    std::cout << "horiz distance: " << horiz_distance << " vert_distance: " << vert_distance << std::endl;
+    // std::cout << "horiz distance: " << horiz_distance << " vert_distance: " << vert_distance << std::endl;
     
     return std::min(horiz_distance, vert_distance);
 }
@@ -215,3 +236,4 @@ double CApp::DegToRad(double degrees){
 double CApp::RadToDeg(double degrees){
     return (degrees * 180 / pi());
 }
+
