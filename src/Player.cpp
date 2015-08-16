@@ -9,7 +9,6 @@ Player::Player() {
     // in degrees
     rot_vector.pitch = 0;
     rot_vector.roll = 0;
-    // TODO FORDEV: player starts facing north
     rot_vector.yaw = 0;
 
     player_height = 64;
