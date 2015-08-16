@@ -25,6 +25,9 @@ bool CApp::LoadLevel() {
             if (x == 1 || x == 10 || y == 1 || y == 10) {
                 level_array[x][y] = 1;
             }
+            else if (!(x % 2) && !(y % 2)){
+                level_array[x][y] = 1;
+            }
         }
     }
 

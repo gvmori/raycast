@@ -3,14 +3,14 @@
 Player::Player() {
 
     // store pos in world coords, not grid coords
-    pos_vector.x = 500;
+    pos_vector.x = 768;
     pos_vector.y = 500;
 
     // in degrees
     rot_vector.pitch = 0;
     rot_vector.roll = 0;
     // TODO FORDEV: player starts facing north
-    rot_vector.yaw = 90;
+    rot_vector.yaw = 0;
 
     player_height = 64;
 }

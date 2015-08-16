@@ -53,7 +53,9 @@ class CApp {
             double angle_increment,
             Vector2<double>* pos, 
             Vector3<double>* rot, 
-            short grid_size
+            short grid_size,
+            int max_x,
+            int max_y
             );
 
         // drawing funtions

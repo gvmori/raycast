@@ -68,7 +68,9 @@ bool CApp::Init() {
         width, height
         );
 
+    SDL_ShowCursor(0);
     LoadLevel();
+
 
     return true;
 }
