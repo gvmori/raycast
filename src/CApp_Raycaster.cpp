@@ -1,13 +1,6 @@
 #include "include/CApp.h"
 
 void CApp::Raycast() {
-    // RENDER WALLS
-    // foreach x in view:
-    //     cast ray
-    //     find distance to wall
-    //     determine projection height
-    //     render projection
-
     Vector2<double>* pos = player.GetPosition();
     Vector3<double>* rot = player.GetRotation();
     short grid_size = (short)config.grid_size;
