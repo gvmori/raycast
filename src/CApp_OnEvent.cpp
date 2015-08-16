@@ -13,21 +13,29 @@ void CApp::OnEvent(SDL_Event* event) {
             running = false;
             return;
 
-            case SDLK_UP:
-            pos->y -= 2;
+            case SDLK_w:
+            pos->y -= 3;
             break;
             
-            case SDLK_DOWN:
-            pos->y += 2;
+            case SDLK_s:
+            pos->y += 3;
+            break;
+
+            case SDLK_a:
+            pos->x -= 3;
+            break;
+            
+            case SDLK_d:
+            pos->x += 3;
             break;
 
             case SDLK_LEFT:
-            rot->yaw += 2;
+            rot->yaw += 3;
             rot->yaw = fmod(rot->yaw, 360);
             break;
             
             case SDLK_RIGHT:
-            rot->yaw -= 2;
+            rot->yaw -= 3;
             if (rot->yaw < 0) { rot->yaw = 359.9 + rot->yaw; }
             rot->yaw = fmod(rot->yaw, 360);
             break;
