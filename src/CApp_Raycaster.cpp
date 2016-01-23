@@ -47,7 +47,7 @@ double CApp::FindDistance(
     }
 
     // TODO: precalculate or cache?
-    double alpha_tan = tan(DegToRad(absolute_angle));
+    double alpha_tan = tan(LocalMath::DegToRad(absolute_angle));
 
     Vector2<double> horiz_vertex;
     Vector2<double> vert_vertex;
@@ -174,14 +174,3 @@ double CApp::FindDistance(
     return std::min(horiz_distance, vert_distance);
 }
 
-constexpr double pi() { 
-    return acos(-1); 
-}
-
-double CApp::DegToRad(double degrees){
-    return (degrees * pi() / 180);
-}
-
-double CApp::RadToDeg(double degrees){
-    return (degrees * 180 / pi());
-}

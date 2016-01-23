@@ -19,19 +19,23 @@ void CApp::OnEvent(SDL_Event* event) {
             // based on input. 
             // these are for quick render testing only
             case SDLK_w:
-            pos->y -= 3;
+            player.AddMoveVector(0, -3);
+            // pos->y -= 3;
             break;
             
             case SDLK_s:
-            pos->y += 3;
+            player.AddMoveVector(0, 3);
+            // pos->y += 3;
             break;
 
             case SDLK_a:
-            pos->x -= 3;
+            player.AddMoveVector(-3, 0);
+            // pos->x -= 3;
             break;
             
             case SDLK_d:
-            pos->x += 3;
+            player.AddMoveVector(3, 0);
+            // pos->x += 3;
             break;
 
             case SDLK_LEFT:
@@ -41,7 +45,7 @@ void CApp::OnEvent(SDL_Event* event) {
             
             case SDLK_RIGHT:
             rot->yaw -= 3;
-            if (rot->yaw < 0) { rot->yaw = 360 + rot->yaw; }
+            if (rot->yaw < 0) { rot->yaw += 360; }
             rot->yaw = fmod(rot->yaw, 360);
             break;
         }

@@ -11,6 +11,7 @@
 #include "GameConfig.h"
 #include "Player.h"
 #include "Vector.h"
+#include "LocalMath.h"
 
 // TODO: remove
 #include <iostream>
@@ -65,10 +66,5 @@ class CApp {
             Uint16 y_max,
             Uint32 pixel_color
             );
-
-        // math
-        // TODO: move elsewhere
-        double RadToDeg(double degrees);
-        double DegToRad(double degrees);
 };
 #endif
