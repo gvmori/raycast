@@ -1,15 +1,16 @@
 #include "include/Player.h"
+#include <iostream>
 
 Player::Player() {
 
     // store pos in world coords, not grid coords
-    pos_vector.x = 768;
+    pos_vector.x = 600;
     pos_vector.y = 500;
 
     // in degrees
     rot_vector.pitch = 0;
     rot_vector.roll = 0;
-    rot_vector.yaw = 0;
+    rot_vector.yaw = 45;
 
     move_vector.x = 0;
     move_vector.y = 0;
@@ -51,15 +52,46 @@ void Player::Update() {
     // coord) vector.
     double dx;
     double dy;
-    // TODO: quick POC, works for one quadrant only.
-    // rework to work with all quadrants
-    if (rot_vector.yaw > 0 && rot_vector.yaw < 90){
-        dx = -(cos(LocalMath::DegToRad(rot_vector.yaw)) * move_vector.y);
-        dy = sin(LocalMath::DegToRad(rot_vector.yaw)) * move_vector.y;
+
+    double test_angle;
+    double movement_angle = rot_vector.yaw + move_vector.y;
+    if (movement_angle > 360) {
+        movement_angle -= 360;
     }
+
+    uint test_angle_bound = 90;
+    while (test_angle_bound < movement_angle) {
+        test_angle_bound += 90;
+    }
+    test_angle = test_angle_bound - movement_angle;
+
+    dx = sin(LocalMath::DegToRad(test_angle)) * move_vector.x;
+    dy = cos(LocalMath::DegToRad(test_angle)) * move_vector.x;
+
+    // if (movement_angle > 90 && movement_angle <= 270) {
+    //     dy *= -1;
+    // }
+    // if (movement_angle > 180) {
+    //     dx *= -1;
+    // }
+
+    if (movement_angle > 180) {
+        dx *= -1;
+    }
+    if (movement_angle > 270 || movement_angle < 90) {
+        dy *= -1;
+    }
+
+    // if (movement_angle > 0 && movement_angle < 90){
+    //     dx = -(cos(LocalMath::DegToRad(movement_angle)) * move_vector.y);
+    //     dy = sin(LocalMath::DegToRad(movement_angle)) * move_vector.y;
+    // }
 
     pos_vector.y += dy;
     pos_vector.x += dx;
+
+std::cout << "angle: " << movement_angle << " dx: " << dx << " dy: " << dy << std::endl;
+
 
     // clear the move vector so the player stops.
     // TODO: replace this with something that accounts for momentum, etc

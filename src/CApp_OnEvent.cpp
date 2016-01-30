@@ -19,22 +19,22 @@ void CApp::OnEvent(SDL_Event* event) {
             // based on input. 
             // these are for quick render testing only
             case SDLK_w:
-            player.AddMoveVector(0, -3);
+            player.AddMoveVector(3, 0);
             // pos->y -= 3;
             break;
             
             case SDLK_s:
-            player.AddMoveVector(0, 3);
+            player.AddMoveVector(3, 180);
             // pos->y += 3;
             break;
 
             case SDLK_a:
-            player.AddMoveVector(-3, 0);
+            player.AddMoveVector(3, 270);
             // pos->x -= 3;
             break;
             
             case SDLK_d:
-            player.AddMoveVector(3, 0);
+            player.AddMoveVector(3, 90);
             // pos->x += 3;
             break;
 
