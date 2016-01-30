@@ -1,5 +1,4 @@
 #include "include/Player.h"
-#include <iostream>
 
 Player::Player() {
 
@@ -93,9 +92,6 @@ void Player::Update() {
 
     pos_vector.y += dy;
     pos_vector.x += dx;
-
-// std::cout << "angle: " << movement_angle << " dx: " << dx << " dy: " << dy << std::endl;
-
 
     // clear the move vector so the player stops.
     // TODO: replace this with something that accounts for momentum, etc
