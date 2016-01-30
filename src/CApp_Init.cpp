@@ -71,6 +71,5 @@ bool CApp::Init() {
     SDL_ShowCursor(0);
     LoadLevel();
 
-
     return true;
 }

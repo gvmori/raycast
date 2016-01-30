@@ -18,6 +18,7 @@ void CApp::OnEvent(SDL_Event* event) {
             // build out Player to handle pos+rot translation requests, send requests
             // based on input. 
             // these are for quick render testing only
+            // movement vectors will be (magnitude, relative_angle_of_movement)
             case SDLK_w:
             player.AddMoveVector(3, 0);
             // pos->y -= 3;

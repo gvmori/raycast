@@ -68,13 +68,9 @@ void Player::Update() {
     dx = sin(LocalMath::DegToRad(test_angle)) * move_vector.x;
     dy = cos(LocalMath::DegToRad(test_angle)) * move_vector.x;
 
-    // if (movement_angle > 90 && movement_angle <= 270) {
-    //     dy *= -1;
-    // }
-    // if (movement_angle > 180) {
-    //     dx *= -1;
-    // }
-
+    // quadrants are rotated 90 degrees from standard, 0,0 is in the NW corner
+    // of the map, any movements in that direction will have both negative, NE
+    // corner will be +x -y, SE +x +y, SW -x +y.
     if (movement_angle > 180) {
         dx *= -1;
     }
@@ -82,15 +78,23 @@ void Player::Update() {
         dy *= -1;
     }
 
-    // if (movement_angle > 0 && movement_angle < 90){
-    //     dx = -(cos(LocalMath::DegToRad(movement_angle)) * move_vector.y);
-    //     dy = sin(LocalMath::DegToRad(movement_angle)) * move_vector.y;
-    // }
+    // TODO:  this works, but it's too late at night to figure out why. the
+    // NE/SW quadrants seem to be reflected, swapping and inverting dx and dy
+    // give the correct movement, leaving them as-is causes, uh, reflected and
+    // inverted movement. this is probably because of an oversight in the
+    // trigonometry above, double check it on paper. 
+    if (movement_angle > 270 || (movement_angle > 90 && movement_angle < 180)){
+        double hold = dx;
+        dx = dy;
+        dy = hold;
+        dx *= -1;
+        dy *= -1;
+    }
 
     pos_vector.y += dy;
     pos_vector.x += dx;
 
-std::cout << "angle: " << movement_angle << " dx: " << dx << " dy: " << dy << std::endl;
+// std::cout << "angle: " << movement_angle << " dx: " << dx << " dy: " << dy << std::endl;
 
 
     // clear the move vector so the player stops.
