@@ -1,15 +1,14 @@
 #include "include/Player.h"
 
 Player::Player() {
-
     // store pos in world coords, not grid coords
-    pos_vector.x = 600;
+    pos_vector.x = 650;
     pos_vector.y = 500;
 
     // in degrees
     rot_vector.pitch = 0;
     rot_vector.roll = 0;
-    rot_vector.yaw = 45;
+    rot_vector.yaw = 0;
 
     move_vector.x = 0;
     move_vector.y = 0;
@@ -18,6 +17,8 @@ Player::Player() {
 }
 
 void Player::AddMoveVector(double x, double y){
+    // TODO: add the vector to the existing vector, if any, instead of
+    // overwriting
     move_vector.x = x;
     move_vector.y = y;
 }
@@ -43,59 +44,32 @@ void Player::SetRotation(double pitch, double roll, double yaw) {
 }
 
 void Player::Update() {
-    // move the player based on its move_vector. note that y is a
-    // forward/backward movement, x is a side-to-side movement. 
+    Move();
+}
 
-    // forward/backward movement:
-    // first, convert the relative (player-based) vector to an absolute (world-
-    // coord) vector.
-    double dx;
-    double dy;
-
-    double test_angle;
+void Player::Move() {
+    // move the player based on its move_vector, which will be (x=distance, y=angle).
+    // assume the movement angle is relative to the player's facing.
     double movement_angle = rot_vector.yaw + move_vector.y;
-    if (movement_angle > 360) {
+    while (movement_angle > 360) {
         movement_angle -= 360;
     }
 
-    uint test_angle_bound = 90;
-    while (test_angle_bound < movement_angle) {
-        test_angle_bound += 90;
-    }
-    test_angle = test_angle_bound - movement_angle;
+    // TODO: this seems to check out mathematically, but in practice it
+    // doesn't yet work. there may be issues with the raycasting code (why
+    // does rot->yaw work counter-clockwise? is rot->yaw at the center of the
+    // screen or the edge? etc)
+    double dx = sin(LocalMath::DegToRad(movement_angle)) * move_vector.x;
+    double dy = cos(LocalMath::DegToRad(movement_angle)) * move_vector.x;
+    // NW corner is 0,0--dy should decrease as one moves north
+    dy *= -1;
 
-    dx = sin(LocalMath::DegToRad(test_angle)) * move_vector.x;
-    dy = cos(LocalMath::DegToRad(test_angle)) * move_vector.x;
-
-    // quadrants are rotated 90 degrees from standard, 0,0 is in the NW corner
-    // of the map, any movements in that direction will have both negative, NE
-    // corner will be +x -y, SE +x +y, SW -x +y.
-    if (movement_angle > 180) {
-        dx *= -1;
-    }
-    if (movement_angle > 270 || movement_angle < 90) {
-        dy *= -1;
-    }
-
-    // TODO:  this works, but it's too late at night to figure out why. the
-    // NE/SW quadrants seem to be reflected, swapping and inverting dx and dy
-    // give the correct movement, leaving them as-is causes, uh, reflected and
-    // inverted movement. this is probably because of an oversight in the
-    // trigonometry above, double check it on paper. 
-    if (movement_angle > 270 || (movement_angle > 90 && movement_angle < 180)){
-        double hold = dx;
-        dx = dy;
-        dy = hold;
-        dx *= -1;
-        dy *= -1;
-    }
-
-    pos_vector.y += dy;
+    // TODO: check collisions first
     pos_vector.x += dx;
+    pos_vector.y += dy;
 
     // clear the move vector so the player stops.
     // TODO: replace this with something that accounts for momentum, etc
     move_vector.x = 0;
     move_vector.y = 0;
-
 }

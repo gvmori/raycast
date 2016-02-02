@@ -20,8 +20,26 @@ void CApp::Raycast() {
         wall_size = std::min((int)config.view_height, (int)wall_size + top);
 
         // temporary shading by distance
-        int red_color = 255 - (((distance/grid_size) * 255) / max_x);
-        DrawLine(i, top, wall_size, SDL_MapRGB(screen_format, red_color, 0, 0));
+        // int red_color = 255 - (((distance/grid_size) * 255) / max_x);
+
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+        if (rot->yaw > 270) {
+            green = 255 - (((distance/grid_size) * 255) / max_x);
+            red = 255 - (((distance/grid_size) * 255) / max_x);
+        }
+        else if (rot->yaw > 180) {
+            blue = 255 - (((distance/grid_size) * 255) / max_x);
+        }
+        else if (rot->yaw > 90) {
+            green = 255 - (((distance/grid_size) * 255) / max_x);
+        }
+        else {
+            red = 255 - (((distance/grid_size) * 255) / max_x);
+        }
+
+        DrawLine(i, top, wall_size, SDL_MapRGB(screen_format, red, green, blue));
     }
 }
 

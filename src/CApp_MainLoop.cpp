@@ -8,8 +8,6 @@ void CApp::MainLoop() {
     SDL_FillRect(screen_buffer_surf, NULL, 0x000000);
     // TODO: handle creature/object updates generally
     player.Update();
-    
+
     Raycast();
-    
-    
 }

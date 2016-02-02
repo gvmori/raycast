@@ -1,8 +1,7 @@
 #include "include/CApp.h"
 
 void CApp::OnEvent(SDL_Event* event) {
-    // TODO: these vectors for testing only!
-    Vector2<double>* pos = player.GetPosition();
+    // TODO: this vector for testing only!
     Vector3<double>* rot = player.GetRotation();
 
     if (event->type == SDL_QUIT) {
@@ -21,22 +20,18 @@ void CApp::OnEvent(SDL_Event* event) {
             // movement vectors will be (magnitude, relative_angle_of_movement)
             case SDLK_w:
             player.AddMoveVector(3, 0);
-            // pos->y -= 3;
             break;
             
             case SDLK_s:
             player.AddMoveVector(3, 180);
-            // pos->y += 3;
             break;
 
             case SDLK_a:
             player.AddMoveVector(3, 270);
-            // pos->x -= 3;
             break;
             
             case SDLK_d:
             player.AddMoveVector(3, 90);
-            // pos->x += 3;
             break;
 
             case SDLK_LEFT:

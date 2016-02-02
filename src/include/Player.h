@@ -24,6 +24,7 @@ class Player {
         void SetPosition(double x, double y);
         void SetRotation(double pitch, double roll, double yaw);
         void Update();
+        void Move();
         Player();
 };
 
