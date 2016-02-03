@@ -59,7 +59,8 @@ double CApp::FindDistance(
 
     double relative_angle = (double)(angle_increment * view_x); 
     // TODO --  precalculate yaw + fov/2 for all traces?
-    double absolute_angle = fmod((rot->yaw + (config.fov/2) - relative_angle), 360);
+    // double absolute_angle = fmod((rot->yaw + (config.fov/2) - relative_angle), 360);
+    double absolute_angle = fmod((rot->yaw - (config.fov/2) + relative_angle), 360);
     if (absolute_angle < 0){
         absolute_angle += 360;
     }

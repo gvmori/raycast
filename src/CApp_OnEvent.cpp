@@ -35,13 +35,13 @@ void CApp::OnEvent(SDL_Event* event) {
             break;
 
             case SDLK_LEFT:
-            rot->yaw += 3;
+            rot->yaw -= 3;
+            if (rot->yaw < 0) { rot->yaw += 360; }
             rot->yaw = fmod(rot->yaw, 360);
             break;
             
             case SDLK_RIGHT:
-            rot->yaw -= 3;
-            if (rot->yaw < 0) { rot->yaw += 360; }
+            rot->yaw += 3;
             rot->yaw = fmod(rot->yaw, 360);
             break;
         }
