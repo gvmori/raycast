@@ -59,6 +59,11 @@ class CApp {
             int max_y
             );
 
+        Vector2<int>* FindWall(
+            Vector2<double>& vertex,
+            Vector2<double>& interval
+            );
+
         // drawing funtions
         void DrawLine(
             Uint16 x, 

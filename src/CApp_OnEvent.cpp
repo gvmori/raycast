@@ -48,7 +48,7 @@ void CApp::OnEvent(SDL_Event* event) {
 
     }
     else if (event->type == SDL_MOUSEMOTION) {
-        rot->yaw -= event->motion.xrel;
+        rot->yaw += event->motion.xrel;
         if (rot->yaw < 0) { rot->yaw = 360 + rot->yaw; }
         rot->yaw = fmod(rot->yaw, 360);
     }
