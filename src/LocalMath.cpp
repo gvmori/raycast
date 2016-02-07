@@ -5,7 +5,7 @@ using namespace LocalMath;
 double LocalMath::DegToRad(double degrees){
     return (degrees * pi() / 180);
 }
-    
+
 double LocalMath::RadToDeg(double degrees){
     return (degrees * 180 / pi());
 }

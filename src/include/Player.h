@@ -3,6 +3,7 @@
  
 #include <SDL.h>
 #include <cstdint>
+#include <vector>
 #include "Vector.h"
 
 // for movement--remove once movement is generalized
@@ -13,7 +14,7 @@ class Player {
     private:
         Vector2<double> pos_vector;
         Vector3<double> rot_vector;
-        Vector2<double> move_vector;
+        std::vector<Vector2<double> > move_vectors;
 
     public:
         Uint16 player_height;

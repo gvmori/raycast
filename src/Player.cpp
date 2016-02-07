@@ -10,17 +10,13 @@ Player::Player() {
     rot_vector.roll = 0;
     rot_vector.yaw = 0;
 
-    move_vector.x = 0;
-    move_vector.y = 0;
-
     player_height = 64;
+
+    // std::vector<Vector2<double> > move_vectors;
 }
 
 void Player::AddMoveVector(double x, double y){
-    // TODO: add the vector to the existing vector, if any, instead of
-    // overwriting
-    move_vector.x = x;
-    move_vector.y = y;
+    move_vectors.emplace_back(Vector2<double>(x, y));
 }
 
 Vector2<double>* Player::GetPosition() {
@@ -48,19 +44,21 @@ void Player::Update() {
 }
 
 void Player::Move() {
-    // move the player based on its move_vector, which will be (x=distance, y=angle).
-    // assume the movement angle is relative to the player's facing.
-    double movement_angle = rot_vector.yaw + move_vector.y;
-    while (movement_angle > 360) {
-        movement_angle -= 360;
-    }
+    double dx = 0;
+    double dy = 0;
+    double movement_angle;
+    for (auto move_vector = move_vectors.begin(); move_vector != move_vectors.end(); move_vector++) {
+        // move the player based on its move_vector, which will be
+        // (x=distance, y=angle). assume the movement angle is relative to the
+        // player's facing.
+        movement_angle = rot_vector.yaw + move_vector->y;
+        while (movement_angle > 360) {
+            movement_angle -= 360;
+        }
 
-    // TODO: this seems to check out mathematically, but in practice it
-    // doesn't yet work. there may be issues with the raycasting code (why
-    // does rot->yaw work counter-clockwise? is rot->yaw at the center of the
-    // screen or the edge? etc)
-    double dx = sin(LocalMath::DegToRad(movement_angle)) * move_vector.x;
-    double dy = cos(LocalMath::DegToRad(movement_angle)) * move_vector.x;
+        dx += sin(LocalMath::DegToRad(movement_angle)) * move_vector->x;
+        dy += cos(LocalMath::DegToRad(movement_angle)) * move_vector->x;
+    }
     // NW corner is 0,0--dy should decrease as one moves north
     dy *= -1;
 
@@ -68,8 +66,7 @@ void Player::Move() {
     pos_vector.x += dx;
     pos_vector.y += dy;
 
-    // clear the move vector so the player stops.
+    // clear the move vectors so the player stops.
     // TODO: replace this with something that accounts for momentum, etc
-    move_vector.x = 0;
-    move_vector.y = 0;
+    move_vectors.clear();
 }
