@@ -50,18 +50,22 @@ class CApp {
         // TODO: move to own class?
         void Raycast();
         double FindDistance(
-            int view_x, 
-            double angle_increment,
-            Vector2<double>* pos, 
-            Vector3<double>* rot, 
-            short grid_size,
-            int max_x,
-            int max_y
+            const int view_x, 
+            const double angle_increment,
+            const Vector2<double>* pos, 
+            const Vector3<double>* rot, 
+            const short grid_size,
+            const int max_x,
+            const int max_y
             );
 
-        Vector2<int>* FindWall(
-            Vector2<double>& vertex,
-            Vector2<double>& interval
+        void FindWall(
+            Vector2<double>& vertex, 
+            const Vector2<double>& interval, 
+            Vector2<int>& result,
+            const short grid_size,
+            const int max_x,
+            const int max_y
             );
 
         // drawing funtions
