@@ -21,13 +21,8 @@ int CApp::Execute() {
     }
 
     start_time = SDL_GetTicks();
-    SDL_Event event;
 
     while (running) {
-        while (SDL_PollEvent(&event)) {
-            OnEvent(&event);
-        }
-
         MainLoop();
         Render();
     }

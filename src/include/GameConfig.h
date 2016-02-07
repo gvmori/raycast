@@ -13,6 +13,9 @@ class GameConfig {
         Uint16 view_height;
         Uint16 view_width;
 
+        Uint8 player_speed_forward;
+        Uint8 player_speed_side;
+
         GameConfig();
 };
 

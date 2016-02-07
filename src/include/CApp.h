@@ -33,6 +33,9 @@ class CApp {
         Uint32 start_time;
         Uint32 last_time;
 
+        SDL_Event event;
+        const Uint8* kbstate;
+
         GameConfig config;
         Player player;
 
@@ -41,7 +44,9 @@ class CApp {
         int Execute();
         bool Init();
         bool LoadLevel();
-        void OnEvent(SDL_Event* event);
+        void HandleEvents();
+        void HandleDiscreteEvents();
+        void HandleMomentaryEvents();
         void MainLoop();
         void Render();
         void Cleanup();

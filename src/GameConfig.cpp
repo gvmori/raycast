@@ -9,4 +9,8 @@ GameConfig::GameConfig() {
 
     // world settings
     grid_size = 128;
+
+    // player settings
+    player_speed_forward = 1.25;
+    player_speed_side = 1.25;
 }

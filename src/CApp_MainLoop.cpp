@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 void CApp::MainLoop() {
+    HandleEvents();
     // TODO: remove fillrect, shouldn't be necessary after floor+ceiling
     // drawing is in
     SDL_FillRect(screen_buffer_surf, NULL, 0x000000);
