@@ -6,10 +6,10 @@ void CApp::HandleEvents() {
     HandleMomentaryEvents();
 }
 
-void HandleDiscreteEvents() {
+void CApp::HandleDiscreteEvents() {
     // TODO: this vector for testing only!
     Vector3<double>* rot = player.GetRotation();
-    
+
     while (SDL_PollEvent(&event)){
         if (event.type == SDL_QUIT) {
             running = false;
@@ -41,7 +41,7 @@ void HandleDiscreteEvents() {
     }
 }
 
-void HandleMomentaryEvents() {
+void CApp::HandleMomentaryEvents() {
     kbstate = SDL_GetKeyboardState(NULL);
 
     // movement vectors will be (magnitude, relative_angle_of_movement)
