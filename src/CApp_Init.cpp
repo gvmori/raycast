@@ -9,8 +9,8 @@ bool CApp::Init() {
     Uint16 height = config.view_height;
 
     screen = SDL_CreateWindow("GameWindow!",
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
+            SDL_WINDOWPOS_CENTERED,
+            SDL_WINDOWPOS_CENTERED,
             width, height,
             // use opengl??
             SDL_WINDOW_RESIZABLE

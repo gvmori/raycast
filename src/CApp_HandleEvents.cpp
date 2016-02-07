@@ -1,6 +1,5 @@
 #include "include/CApp.h"
 
-// void CApp::HandleEvents(SDL_Event* event) {
 void CApp::HandleEvents() {
     HandleDiscreteEvents();
     HandleMomentaryEvents();
@@ -39,6 +38,9 @@ void CApp::HandleDiscreteEvents() {
             rot->yaw = fmod(rot->yaw, 360);
         }
     }
+
+
+
 }
 
 void CApp::HandleMomentaryEvents() {
